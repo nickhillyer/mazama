@@ -1,2 +1,2 @@
 # Mazama
-Cameras in Mazama
+Cameras in and around Mazama Washington.
