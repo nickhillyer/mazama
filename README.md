@@ -1,2 +1,2 @@
-# mazama
+# Mazama
 Cameras in Mazama
