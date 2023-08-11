@@ -1,0 +1,2 @@
+# mazama
+Cameras in Mazama
