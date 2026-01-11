@@ -18,29 +18,27 @@ jobs:
 
       - name: Fetch Latest Observation from C6697
         run: |
-          # Fetch weather data from API
+          # Fetch weather data from API and save raw data
           curl -H "User-Agent: (github.com/nickhillyer/mazama, nickhillyer@me.com)" \
                "https://api.weather.gov/stations/C6697/observations/latest" \
-               -o weather-raw.json
+               -o latest-weather.json
           
-          # Extract temperature (in Celsius) and timestamp, convert to Fahrenheit and floor
-          jq '{
-            timestamp: .properties.timestamp,
-            temperature: (
-              if .properties.temperature.value != null 
-              then ((.properties.temperature.value * 9 / 5 + 32) | floor) 
-              else null 
-              end
-            )
-          }' weather-raw.json > latest-weather.json
-          
-          # Clean up temporary file
-          rm weather-raw.json
+          # Check if temperature is not null before creating processed file
+          if [ "$(jq -r '.properties.temperature.value' latest-weather.json)" != "null" ]; then
+            # Extract temperature (in Celsius) and timestamp, convert to Fahrenheit and floor
+            jq '{
+              timestamp: .properties.timestamp,
+              temperature: ((.properties.temperature.value * 9 / 5 + 32) | floor)
+            }' latest-weather.json > latest-weather-processed.json
+          else
+            echo "Temperature is null, skipping processed file update"
+          fi
 
       - name: Commit and Push if changed
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add latest-weather.json
+          git add latest-weather-processed.json 2>/dev/null || true
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update hourly weather data" && git push)
       
