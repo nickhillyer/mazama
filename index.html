@@ -35,11 +35,75 @@
 			font-variant-caps: all-small-caps;
 			text-decoration: none;
 		}
+		/* minimal formatting for the temperature line */
+		.tempLine {
+			color: #fc6f03;
+			font-size: 18px;
+			margin: 0 0 8px 0;
+		}
 	</style>
 </head>
 <body>
 	<div class="cams">
 	<!-- <p class="pageTitle">Mazama Cameras</p> -->
+
+	<!-- Temperature: fetch from latest-weather.json, convert to °F, show local timestamp -->
+	<script type="text/javascript">
+		(async function () {
+			const container = document.querySelector('.cams');
+			const tempEl = document.createElement('p');
+			tempEl.id = 'temperature';
+			tempEl.className = 'tempLine';
+			tempEl.textContent = 'Loading temperature...';
+			container.insertBefore(tempEl, container.firstChild);
+
+			function toFahrenheit(celsius) {
+				return (celsius * 9 / 5) + 32;
+			}
+
+			try {
+				const resp = await fetch('latest-weather.json');
+				if (!resp.ok) throw new Error('Network response was not ok');
+				const data = await resp.json();
+
+				const tempVal = data?.properties?.temperature?.value;
+				const unitCode = data?.properties?.temperature?.unitCode || '';
+				const timestampStr = data?.properties?.timestamp;
+
+				let tempF = null;
+				if (tempVal === null || tempVal === undefined || Number.isNaN(Number(tempVal))) {
+					tempEl.textContent = 'Temperature: N/A';
+					return;
+				} else {
+					if (unitCode && unitCode.toLowerCase().includes('degf')) {
+						tempF = Number(tempVal);
+					} else {
+						tempF = toFahrenheit(Number(tempVal));
+					}
+				}
+
+				const roundedF = Math.round(tempF * 10) / 10;
+
+				let localTime = 'time unavailable';
+				if (timestampStr) {
+					const d = new Date(timestampStr);
+					if (!isNaN(d.getTime())) {
+						try {
+							localTime = d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+						} catch (e) {
+							localTime = d.toLocaleString();
+						}
+					}
+				}
+
+				tempEl.textContent = 'Temperature: ' + roundedF + ' °F — ' + localTime;
+			} catch (err) {
+				console.error('Failed to load temperature:', err);
+				tempEl.textContent = 'Temperature: unavailable';
+			}
+		})();
+	</script>
+
 	<script type="text/javascript">
 
 		//Mazama Ranch House		
