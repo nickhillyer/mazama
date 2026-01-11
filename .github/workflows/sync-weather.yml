@@ -2,7 +2,7 @@ name: Sync Weather Data
 
 on:
   schedule:
-    # Runs at the start of every hour
+    # Runs 20 minutes after the start of every hour
     - cron: '20 * * * *'
   workflow_dispatch: # Allows you to manually trigger it for testing
 
