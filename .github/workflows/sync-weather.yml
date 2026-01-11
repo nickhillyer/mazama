@@ -18,9 +18,19 @@ jobs:
 
       - name: Fetch Latest Observation from C6697
         run: |
+          # Fetch weather data from API
           curl -H "User-Agent: (github.com/nickhillyer/mazama, nickhillyer@me.com)" \
                "https://api.weather.gov/stations/C6697/observations/latest" \
-               -o latest-weather.json
+               -o weather-raw.json
+          
+          # Extract temperature (in Celsius) and timestamp, convert to Fahrenheit and floor
+          jq '{
+            timestamp: .properties.timestamp,
+            temperature: ((.properties.temperature.value * 9 / 5 + 32) | floor)
+          }' weather-raw.json > latest-weather.json
+          
+          # Clean up temporary file
+          rm weather-raw.json
 
       - name: Commit and Push if changed
         run: |
