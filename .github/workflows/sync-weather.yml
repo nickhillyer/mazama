@@ -26,7 +26,7 @@ jobs:
           # Extract temperature (in Celsius) and timestamp, convert to Fahrenheit and floor
           jq '{
             timestamp: .properties.timestamp,
-            temperature: ((.properties.temperature.value * 9 / 5 + 32) | floor)
+            temperature: (if .properties.temperature.value != null then ((.properties.temperature.value * 9 / 5 + 32) | floor) else null end)
           }' weather-raw.json > latest-weather.json
           
           # Clean up temporary file
