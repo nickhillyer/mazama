@@ -1,4 +1,4 @@
-name: Weather Sync
+name: Sync Weather Data
 
 on:
   schedule:
