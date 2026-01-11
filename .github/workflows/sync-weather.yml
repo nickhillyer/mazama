@@ -18,7 +18,7 @@ jobs:
 
       - name: Fetch Latest Observation from C6697
         run: |
-          curl -H "User-Agent: (MazamaCameras, nickhillyer@me.com)" \
+          curl -H "User-Agent: (github.com/nickhillyer/mazama, nickhillyer@me.com)" \
                "https://api.weather.gov/stations/C6697/observations/latest" \
                -o latest-weather.json
 
