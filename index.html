@@ -47,6 +47,11 @@
 		fetch('latest-weather.json')
 			.then(response => response.json())
 			.then(data => {
+				// Validate data structure
+				if (!data || !data.properties || !data.properties.temperature || !data.properties.timestamp) {
+					return;
+				}
+				
 				// Get temperature in Celsius and convert to Fahrenheit
 				const tempC = data.properties.temperature.value;
 				const tempF = (tempC * 9/5) + 32;
@@ -60,14 +65,17 @@
 				
 				let timeText;
 				if (diffMins < 60) {
-					timeText = diffMins + ' minutes ago';
+					timeText = diffMins + (diffMins === 1 ? ' minute ago' : ' minutes ago');
 				} else {
-					timeText = diffHours + ' hours ago';
+					timeText = diffHours + (diffHours === 1 ? ' hour ago' : ' hours ago');
 				}
 				
 				// Display the data
 				document.getElementById('weather').innerHTML = 
 					tempF.toFixed(1) + '°F - ' + timeText;
+			})
+			.catch(error => {
+				// Silently fail if weather data cannot be loaded
 			});
 
 	</script>
