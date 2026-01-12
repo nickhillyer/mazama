@@ -60,7 +60,7 @@
 				
 				// Get temperature in Celsius and convert to Fahrenheit
 				const tempC = data.properties.temperature.value;
-				const tempF = Math.round((tempC * 9/5) + 32);
+				const tempF = (tempC * 9/5) + 32;
 				
 				// Get timestamp and calculate time since update
 				const timestamp = new Date(data.properties.timestamp);
@@ -72,7 +72,7 @@
 				
 				// Display the data
 				document.getElementById('weather').innerHTML = 
-					tempF.toFixed(1) + '°F about ' + timeText;
+					tempF.toFixed(0) + '°F about ' + timeText;
 			})
 			.catch(error => {
 				// Silently fail if weather data cannot be loaded
