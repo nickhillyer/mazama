@@ -35,11 +35,51 @@
 			font-variant-caps: all-small-caps;
 			text-decoration: none;
 		}
+		#weather {
+			color: #fc6f03;
+			font-size: 15px;
+		}
 	</style>
 </head>
 <body>
 	<div class="cams">
 	<!-- <p class="pageTitle">Mazama Cameras</p> -->
+	<div id="weather"></div>
+	<script type="text/javascript">
+
+		// Fetch and display weather data
+		fetch('latest-weather.json')
+			.then(response => response.json())
+			.then(data => {
+				// Validate data structure
+				if (!data || !data.properties || !data.properties.temperature || 
+				    data.properties.temperature.value === null || data.properties.temperature.value === undefined ||
+				    !data.properties.timestamp) {
+					return;
+				}
+				
+				// Get temperature in Celsius and convert to Fahrenheit
+				const tempC = data.properties.temperature.value;
+				const tempF = (tempC * 9/5) + 32;
+				
+				// Get timestamp and calculate time since update
+				const timestamp = new Date(data.properties.timestamp);
+				const now = new Date();
+				const diffMs = now - timestamp;
+				const diffMins = Math.floor(diffMs / 60000);
+				
+				const timeText = diffMins + (diffMins === 1 ? ' minute ago' : ' minutes ago');
+				
+				// Display the data
+				document.getElementById('weather').innerHTML = 
+					tempF.toFixed(1) + '°F - ' + timeText;
+			})
+			.catch(error => {
+				// Silently fail if weather data cannot be loaded
+				console.error('Failed to load weather data:', error);
+			});
+
+	</script>
 	<script type="text/javascript">
 
 		//Mazama Ranch House		
