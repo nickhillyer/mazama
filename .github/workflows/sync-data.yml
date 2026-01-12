@@ -2,8 +2,8 @@ name: Sync Data
 
 on:
   schedule:
-    # Runs 20 minutes after the start of every hour
-    - cron: '20 * * * *'
+    # Runs every half hour
+    - cron: '0,30 * * * *'
   workflow_dispatch: # Allows you to manually trigger it for testing
 
 jobs:
