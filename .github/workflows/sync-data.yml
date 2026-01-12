@@ -28,7 +28,7 @@ jobs:
           # Only create the file if temperature is not null
           temp=$(jq -r '.properties.temperature.value' latest-weather.json)
           if [ "$temp" != "null" ]; then
-            jq '{timestamp: .properties.timestamp, temperature: .properties.temperature.value}' latest-weather.json > weather-data.json
+            jq '{timestamp: .properties.timestamp, temperature: .properties.temperature.value}' latest-weather.json > weather-data-processed.json
           fi
 
       - name: Fetch Edelweiss Camera Image
@@ -41,9 +41,9 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add latest-weather.json edelweiss.jpg
-          # Add weather-data.json only if it exists
-          if [ -f weather-data.json ]; then
-            git add weather-data.json
+          # Add weather-data-processed.json only if it exists
+          if [ -f weather-data-processed.json ]; then
+            git add weather-data-processed.json
           fi
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update hourly weather data and camera images" && git push)
       
