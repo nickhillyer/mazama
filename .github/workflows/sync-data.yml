@@ -1,4 +1,4 @@
-name: Sync Weather Data
+name: Sync Data
 
 on:
   schedule:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # Allows you to manually trigger it for testing
 
 jobs:
-  fetch-weather:
+  fetch-data:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -22,10 +22,15 @@ jobs:
                "https://api.weather.gov/stations/C6697/observations/latest" \
                -o latest-weather.json
 
+      - name: Fetch Edelweiss Camera Image
+        run: |
+          curl -L --fail --max-filesize 10M "http://highlandmeadow.homelinux.org" \
+               -o edelweiss.jpg || echo "Failed to fetch Edelweiss image"
+
       - name: Commit and Push if changed
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add latest-weather.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update hourly weather data" && git push)
+          git add latest-weather.json edelweiss.jpg
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update hourly weather data and camera images" && git push)
       
