@@ -20,15 +20,15 @@ jobs:
         run: |
           curl -H "User-Agent: (github.com/nickhillyer/mazama, nickhillyer@me.com)" \
                "https://api.weather.gov/stations/C6697/observations/latest" \
-               -o latest-weather.json
+               -o weather-data.json
 
       - name: Create Simplified Weather JSON
         run: |
           # Extract timestamp and temperature from the full JSON
           # Only create the file if temperature is not null
-          temp=$(jq -r '.properties.temperature.value' latest-weather.json)
+          temp=$(jq -r '.properties.temperature.value' weather-data.json)
           if [ "$temp" != "null" ]; then
-            jq '{timestamp: .properties.timestamp, temperature: .properties.temperature.value}' latest-weather.json > weather-data-processed.json
+            jq '{timestamp: .properties.timestamp, temperature: .properties.temperature.value}' weather-data.json > weather-data-processed.json
           fi
 
       - name: Fetch Edelweiss Camera Image
@@ -40,7 +40,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add latest-weather.json edelweiss.jpg
+          git add weather-data.json edelweiss.jpg
           # Add weather-data-processed.json only if it exists
           if [ -f weather-data-processed.json ]; then
             git add weather-data-processed.json
