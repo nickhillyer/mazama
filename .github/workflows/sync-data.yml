@@ -40,6 +40,10 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add edelweiss.jpg
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update camera images" && git push)
+          git add weather-data.json edelweiss.jpg
+          # Add weather-data-processed.json only if it exists
+          if [ -f weather-data-processed.json ]; then
+            git add weather-data-processed.json
+          fi
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update hourly weather data and camera images" && git push)
       
