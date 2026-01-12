@@ -1,4 +1,4 @@
-name: Sync Weather Data
+name: Sync Data
 
 on:
   schedule:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # Allows you to manually trigger it for testing
 
 jobs:
-  fetch-weather:
+  fetch-data:
     runs-on: ubuntu-latest
     permissions:
       contents: write
