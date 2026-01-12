@@ -67,14 +67,8 @@
 				const now = new Date();
 				const diffMs = now - timestamp;
 				const diffMins = Math.floor(diffMs / 60000);
-				const diffHours = Math.floor(diffMs / 3600000);
 				
-				let timeText;
-				if (diffMins < 60) {
-					timeText = diffMins + (diffMins === 1 ? ' minute ago' : ' minutes ago');
-				} else {
-					timeText = diffHours + (diffHours === 1 ? ' hour ago' : ' hours ago');
-				}
+				const timeText = diffMins + (diffMins === 1 ? ' minute ago' : ' minutes ago');
 				
 				// Display the data
 				document.getElementById('weather').innerHTML = 
