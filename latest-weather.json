@@ -42,7 +42,7 @@
             }
         }
     ],
-    "id": "https://api.weather.gov/stations/C6697/observations/2026-01-12T12:46:00+00:00",
+    "id": "https://api.weather.gov/stations/C6697/observations/2026-01-12T13:36:00+00:00",
     "type": "Feature",
     "geometry": {
         "type": "Point",
@@ -52,7 +52,7 @@
         ]
     },
     "properties": {
-        "@id": "https://api.weather.gov/stations/C6697/observations/2026-01-12T12:46:00+00:00",
+        "@id": "https://api.weather.gov/stations/C6697/observations/2026-01-12T13:36:00+00:00",
         "@type": "wx:ObservationStation",
         "elevation": {
             "unitCode": "wmoUnit:m",
@@ -61,7 +61,7 @@
         "station": "https://api.weather.gov/stations/C6697",
         "stationId": "C6697",
         "stationName": "CW6697 Winthrop",
-        "timestamp": "2026-01-12T12:46:00+00:00",
+        "timestamp": "2026-01-12T13:36:00+00:00",
         "rawMessage": "",
         "textDescription": "",
         "icon": null,
@@ -69,26 +69,26 @@
         "temperature": {
             "unitCode": "wmoUnit:degC",
             "value": 0,
-            "qualityControl": "V"
+            "qualityControl": "S"
         },
         "dewpoint": {
             "unitCode": "wmoUnit:degC",
             "value": -0.14,
-            "qualityControl": "V"
+            "qualityControl": "S"
         },
         "windDirection": {
             "unitCode": "wmoUnit:degree_(angle)",
-            "value": 99,
-            "qualityControl": "V"
+            "value": 112,
+            "qualityControl": "S"
         },
         "windSpeed": {
             "unitCode": "wmoUnit:km_h-1",
-            "value": 3.204,
-            "qualityControl": "V"
+            "value": 9.648,
+            "qualityControl": "S"
         },
         "windGust": {
             "unitCode": "wmoUnit:km_h-1",
-            "value": 4.824,
+            "value": 9.648,
             "qualityControl": "S"
         },
         "barometricPressure": {
@@ -122,17 +122,17 @@
         "relativeHumidity": {
             "unitCode": "wmoUnit:percent",
             "value": 98.989292185964,
-            "qualityControl": "V"
+            "qualityControl": "S"
         },
         "windChill": {
             "unitCode": "wmoUnit:degC",
-            "value": null,
-            "qualityControl": "V"
+            "value": -3.2029493864616665,
+            "qualityControl": "S"
         },
         "heatIndex": {
             "unitCode": "wmoUnit:degC",
             "value": null,
-            "qualityControl": "V"
+            "qualityControl": "S"
         },
         "cloudLayers": []
     }
