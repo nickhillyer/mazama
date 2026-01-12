@@ -82,6 +82,7 @@
 			})
 			.catch(error => {
 				// Silently fail if weather data cannot be loaded
+				console.error('Failed to load weather data:', error);
 			});
 
 	</script>
