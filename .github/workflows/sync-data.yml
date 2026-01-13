@@ -40,7 +40,12 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add weather-data.json weather-data-processed.json edelweiss.jpg
+          # Add files that exist
+          for file in weather-data.json weather-data-processed.json edelweiss.jpg; do
+            if [ -f "$file" ]; then
+              git add "$file"
+            fi
+          done
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
