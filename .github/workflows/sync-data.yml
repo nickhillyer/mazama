@@ -53,5 +53,3 @@ jobs:
             git commit -m "Update weather data and camera images"
             git push
           fi
-
-      
