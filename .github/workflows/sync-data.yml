@@ -40,9 +40,12 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          # No files to commit - all generated files are in .gitignore
-          # Workflow still generates weather-data.json, weather-data-processed.json, and edelweiss.jpg
-          # but they are not committed to prevent merge conflicts
-          echo "Files generated but not committed (see .gitignore)"
+          git add weather-data.json weather-data-processed.json edelweiss.jpg
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update weather data and camera images"
+            git push
+          fi
 
       
