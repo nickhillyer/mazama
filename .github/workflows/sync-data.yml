@@ -35,6 +35,10 @@ jobs:
         run: |
           curl -L --fail --max-filesize 10M "http://highlandmeadow.homelinux.org" \
                -o edelweiss.jpg || echo "Failed to fetch Edelweiss image"
+          # Create edelweiss.json with timestamp if image was fetched successfully
+          if [ -f "edelweiss.jpg" ]; then
+            echo "{\"timestamp\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"}" > edelweiss.json
+          fi
 
       - name: Commit and Push if changed
         run: |
@@ -42,7 +46,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           # Add files that exist
-          for file in weather-data.json weather-data-processed.json edelweiss.jpg; do
+          for file in weather-data.json weather-data-processed.json edelweiss.jpg edelweiss.json; do
             if [ -f "$file" ]; then
               git add "$file"
             fi
