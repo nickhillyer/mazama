@@ -2,8 +2,8 @@ name: Sync Data
 
 on:
   schedule:
-    # Runs every half hour
-    - cron: '0,30 * * * *'
+    # Runs at 5 and 35 minutes past each hour
+    - cron: '5,35 * * * *'
   workflow_dispatch: # Allows you to manually trigger it for testing
 
 jobs:
@@ -20,7 +20,16 @@ jobs:
         run: |
           curl -H "User-Agent: (github.com/nickhillyer/mazama, nickhillyer@me.com)" \
                "https://api.weather.gov/stations/C6697/observations/latest" \
-               -o latest-weather.json
+               -o weather-data.json
+
+      - name: Create Simplified Weather JSON
+        run: |
+          # Extract timestamp and temperature from the full JSON
+          # Only create the file if temperature is not null
+          temp=$(jq -r '.properties.temperature.value' weather-data.json)
+          if [ "$temp" != "null" ]; then
+            jq '{timestamp: .properties.timestamp, temperature: .properties.temperature.value}' weather-data.json > weather-data-processed.json
+          fi
 
       - name: Fetch Edelweiss Camera Image
         run: |
@@ -31,6 +40,9 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add latest-weather.json edelweiss.jpg
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update hourly weather data and camera images" && git push)
+          # No files to commit - all generated files are in .gitignore
+          # Workflow still generates weather-data.json, weather-data-processed.json, and edelweiss.jpg
+          # but they are not committed to prevent merge conflicts
+          echo "Files generated but not committed (see .gitignore)"
+
       

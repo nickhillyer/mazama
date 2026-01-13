@@ -48,22 +48,20 @@
 	<script type="text/javascript">
 
 		// Fetch and display weather data
-		fetch('latest-weather.json')
+		fetch('weather-data-processed.json')
 			.then(response => response.json())
 			.then(data => {
 				// Validate data structure
-				if (!data || !data.properties || !data.properties.temperature || 
-				    data.properties.temperature.value === null || data.properties.temperature.value === undefined ||
-				    !data.properties.timestamp) {
+				if (!data || data.temperature === null || data.temperature === undefined || !data.timestamp) {
 					return;
 				}
 				
 				// Get temperature in Celsius and convert to Fahrenheit
-				const tempC = data.properties.temperature.value;
+				const tempC = data.temperature;
 				const tempF = (tempC * 9/5) + 32;
 				
 				// Get timestamp and calculate time since update
-				const timestamp = new Date(data.properties.timestamp);
+				const timestamp = new Date(data.timestamp);
 				const now = new Date();
 				const diffMs = now - timestamp;
 				const diffMins = Math.floor(diffMs / 60000);
