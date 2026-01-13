@@ -42,7 +42,7 @@
             }
         }
     ],
-    "id": "https://api.weather.gov/stations/C6697/observations/2026-01-13T20:27:00+00:00",
+    "id": "https://api.weather.gov/stations/C6697/observations/2026-01-13T20:58:00+00:00",
     "type": "Feature",
     "geometry": {
         "type": "Point",
@@ -52,7 +52,7 @@
         ]
     },
     "properties": {
-        "@id": "https://api.weather.gov/stations/C6697/observations/2026-01-13T20:27:00+00:00",
+        "@id": "https://api.weather.gov/stations/C6697/observations/2026-01-13T20:58:00+00:00",
         "@type": "wx:ObservationStation",
         "elevation": {
             "unitCode": "wmoUnit:m",
@@ -61,29 +61,29 @@
         "station": "https://api.weather.gov/stations/C6697",
         "stationId": "C6697",
         "stationName": "CW6697 Winthrop",
-        "timestamp": "2026-01-13T20:27:00+00:00",
+        "timestamp": "2026-01-13T20:58:00+00:00",
         "rawMessage": "",
         "textDescription": "",
         "icon": null,
         "presentWeather": [],
         "temperature": {
             "unitCode": "wmoUnit:degC",
-            "value": 1.67,
+            "value": 2.22,
             "qualityControl": "V"
         },
         "dewpoint": {
             "unitCode": "wmoUnit:degC",
-            "value": 1.52,
+            "value": 2.07,
             "qualityControl": "V"
         },
         "windDirection": {
             "unitCode": "wmoUnit:degree_(angle)",
-            "value": 52,
+            "value": 85,
             "qualityControl": "V"
         },
         "windSpeed": {
             "unitCode": "wmoUnit:km_h-1",
-            "value": 4.824,
+            "value": 0,
             "qualityControl": "V"
         },
         "windGust": {
@@ -121,7 +121,7 @@
         },
         "relativeHumidity": {
             "unitCode": "wmoUnit:percent",
-            "value": 98.932097280858,
+            "value": 98.936857425088,
             "qualityControl": "V"
         },
         "windChill": {
