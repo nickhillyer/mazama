@@ -38,11 +38,20 @@ jobs:
 
       - name: Commit and Push if changed
         run: |
+          set -e
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          # No files to commit - all generated files are in .gitignore
-          # Workflow still generates weather-data.json, weather-data-processed.json, and edelweiss.jpg
-          # but they are not committed to prevent merge conflicts
-          echo "Files generated but not committed (see .gitignore)"
+          # Add files that exist
+          for file in weather-data.json weather-data-processed.json edelweiss.jpg; do
+            if [ -f "$file" ]; then
+              git add "$file"
+            fi
+          done
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update weather data and camera images"
+            git push
+          fi
 
       
