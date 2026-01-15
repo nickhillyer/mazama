@@ -42,7 +42,7 @@
             }
         }
     ],
-    "id": "https://api.weather.gov/stations/C6697/observations/2026-01-15T17:37:00+00:00",
+    "id": "https://api.weather.gov/stations/C6697/observations/2026-01-15T18:17:00+00:00",
     "type": "Feature",
     "geometry": {
         "type": "Point",
@@ -52,7 +52,7 @@
         ]
     },
     "properties": {
-        "@id": "https://api.weather.gov/stations/C6697/observations/2026-01-15T17:37:00+00:00",
+        "@id": "https://api.weather.gov/stations/C6697/observations/2026-01-15T18:17:00+00:00",
         "@type": "wx:ObservationStation",
         "elevation": {
             "unitCode": "wmoUnit:m",
@@ -61,34 +61,34 @@
         "station": "https://api.weather.gov/stations/C6697",
         "stationId": "C6697",
         "stationName": "CW6697 Winthrop",
-        "timestamp": "2026-01-15T17:37:00+00:00",
+        "timestamp": "2026-01-15T18:17:00+00:00",
         "rawMessage": "",
         "textDescription": "",
         "icon": null,
         "presentWeather": [],
         "temperature": {
             "unitCode": "wmoUnit:degC",
-            "value": -3.89,
+            "value": -0.56,
             "qualityControl": "V"
         },
         "dewpoint": {
             "unitCode": "wmoUnit:degC",
-            "value": -4.17,
+            "value": -1.13,
             "qualityControl": "V"
         },
         "windDirection": {
             "unitCode": "wmoUnit:degree_(angle)",
-            "value": 209,
+            "value": 39,
             "qualityControl": "V"
         },
         "windSpeed": {
             "unitCode": "wmoUnit:km_h-1",
-            "value": 0,
+            "value": 4.824,
             "qualityControl": "V"
         },
         "windGust": {
             "unitCode": "wmoUnit:km_h-1",
-            "value": 4.824,
+            "value": 6.444,
             "qualityControl": "S"
         },
         "barometricPressure": {
@@ -121,7 +121,7 @@
         },
         "relativeHumidity": {
             "unitCode": "wmoUnit:percent",
-            "value": 97.922305402479,
+            "value": 95.922963134801,
             "qualityControl": "V"
         },
         "windChill": {
