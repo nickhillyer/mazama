@@ -41,7 +41,6 @@
             color: var(--brand-orange);
             font-size: 22px;
             font-weight: 800;
-            text-transform: uppercase;
             letter-spacing: 1px;
             margin: 0;
         }
@@ -70,7 +69,6 @@
             color: #aaa;
             font-size: 12px;
             font-weight: 700;
-            text-transform: uppercase;
             letter-spacing: 0.5px;
             /* Hover color change removed */
         }
@@ -130,7 +128,7 @@
                 const timestamp = new Date(props.timestamp);
                 const diffMins = Math.floor((new Date() - timestamp) / 60000);
                 const timeText = diffMins < 1 ? 'just now' : diffMins + 'm ago';
-                weatherEl.innerHTML = `${tempF.toFixed(0)}°F <span style="font-size:11px; font-weight:normal; color:#888;">· ${timeText}</span>`;
+                weatherEl.innerHTML = `${tempF.toFixed(0)}° <span style="font-size:11px; font-weight:normal; color:#888;"> ${timeText}</span>`;
             })
             .catch(error => {
                 console.error('Weather load failed:', error);
