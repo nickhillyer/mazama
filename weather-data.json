@@ -42,7 +42,7 @@
             }
         }
     ],
-    "id": "https://api.weather.gov/stations/C6697/observations/2026-01-18T18:16:00+00:00",
+    "id": "https://api.weather.gov/stations/C6697/observations/2026-01-18T18:26:00+00:00",
     "type": "Feature",
     "geometry": {
         "type": "Point",
@@ -52,7 +52,7 @@
         ]
     },
     "properties": {
-        "@id": "https://api.weather.gov/stations/C6697/observations/2026-01-18T18:16:00+00:00",
+        "@id": "https://api.weather.gov/stations/C6697/observations/2026-01-18T18:26:00+00:00",
         "@type": "wx:ObservationStation",
         "elevation": {
             "unitCode": "wmoUnit:m",
@@ -61,29 +61,29 @@
         "station": "https://api.weather.gov/stations/C6697",
         "stationId": "C6697",
         "stationName": "CW6697 Winthrop",
-        "timestamp": "2026-01-18T18:16:00+00:00",
+        "timestamp": "2026-01-18T18:26:00+00:00",
         "rawMessage": "",
         "textDescription": "",
         "icon": null,
         "presentWeather": [],
         "temperature": {
             "unitCode": "wmoUnit:degC",
-            "value": -6.67,
+            "value": -6.11,
             "qualityControl": "V"
         },
         "dewpoint": {
             "unitCode": "wmoUnit:degC",
-            "value": -7.36,
+            "value": -6.81,
             "qualityControl": "V"
         },
         "windDirection": {
             "unitCode": "wmoUnit:degree_(angle)",
-            "value": 116,
+            "value": 112,
             "qualityControl": "V"
         },
         "windSpeed": {
             "unitCode": "wmoUnit:km_h-1",
-            "value": 6.444,
+            "value": 4.824,
             "qualityControl": "V"
         },
         "windGust": {
@@ -121,12 +121,12 @@
         },
         "relativeHumidity": {
             "unitCode": "wmoUnit:percent",
-            "value": 94.832616511244,
+            "value": 94.783629613076,
             "qualityControl": "V"
         },
         "windChill": {
             "unitCode": "wmoUnit:degC",
-            "value": -9.887283468763888,
+            "value": null,
             "qualityControl": "V"
         },
         "heatIndex": {
