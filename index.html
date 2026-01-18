@@ -48,28 +48,28 @@
 
         #weather {
             color: var(--brand-orange);
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 16px;
+            font-weight: 600;
         }
 
         .camera-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
-            justify-content: center;
+            justify-content: space-between; /* Better alignment for side-by-side */
         }
 
         .cam-card {
             background: var(--card-bg);
             border-radius: 6px;
             text-decoration: none;
-            width: 100%;
-            max-width: 420px;
+            width: 100%; /* Default to full width for mobile */
             display: flex;
             flex-direction: column;
             border: 1px solid #444;
             overflow: hidden;
             transition: border-color 0.2s;
+            box-sizing: border-box;
         }
 
         .cam-card:hover {
@@ -90,17 +90,27 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 200px;
         }
 
         .cam-card img {
             width: 100%;
             height: auto;
             display: block;
-            object-fit: contain; /* Prevents stretching */
+            object-fit: contain;
         }
 
+        /* Desktop Layout logic */
         @media (min-width: 700px) {
-            .cam-card {
+            /* First two items remain 100% width */
+            .cam-card:nth-child(1),
+            .cam-card:nth-child(2) {
+                width: 100%;
+            }
+
+            /* 3rd item onwards: Split into 2 columns */
+            /* We subtract 10px to account for the 20px gap (20 / 2 = 10) */
+            .cam-card:nth-child(n+3) {
                 width: calc(50% - 10px);
             }
         }
@@ -111,7 +121,7 @@
 <div class="container">
     <header>
         <h1 class="pageTitle">Mazama Cameras</h1>
-        <div id="weather">Loading weather...</div>
+        <div id="weather">Loading...</div>
     </header>
 
     <div class="camera-grid" id="camera-container">
@@ -119,30 +129,35 @@
 </div>
 
 <script>
-    // 1. Weather logic with temp and time offset
-    fetch('weather-data-processed.json')
-        .then(response => response.json())
-        .then(data => {
-            if (!data || data.temperature === null || data.temperature === undefined) return;
-            
-            const tempF = (data.temperature * 9/5) + 32;
-            const timestamp = new Date(data.timestamp);
-            const diffMins = Math.floor((new Date() - timestamp) / 60000);
-            const timeText = diffMins + (diffMins === 1 ? ' minute ago' : ' minutes ago');
-            
-            document.getElementById('weather').innerHTML = 
-                tempF.toFixed(0) + '°F about ' + timeText;
-        })
-        .catch(error => {
-            console.error('Weather load failed:', error);
-            document.getElementById('weather').innerText = "";
-        });
+    function updateWeather() {
+        const stationId = 'MAZ22';
+        const weatherEl = document.getElementById('weather');
 
-    // 2. Camera setup
+        fetch(`https://api.weather.gov/stations/${stationId}/observations/latest`)
+            .then(response => response.json())
+            .then(data => {
+                const props = data.properties;
+                const tempC = props.temperature.value;
+                if (tempC === null) {
+                    weatherEl.innerText = "Temp Unavailable";
+                    return;
+                }
+                const tempF = (tempC * 9/5) + 32;
+                const timestamp = new Date(props.timestamp);
+                const diffMins = Math.floor((new Date() - timestamp) / 60000);
+                const timeText = diffMins < 1 ? 'just now' : diffMins + 'm ago';
+                weatherEl.innerHTML = `${tempF.toFixed(0)}°F <span style="font-size:12px; font-weight:normal; opacity:0.8;">about ${timeText}</span>`;
+            })
+            .catch(error => {
+                console.error('Weather load failed:', error);
+                weatherEl.innerText = "";
+            });
+    }
+
     const cameras = [
         { name: "Mazama Ranch House", url: "https://mazamaranchhouse.com/webcam", img: "https://mazamacam.earthandskystudios.com/content/ranchhouseimg.jpg" },
         { name: "Sun Mountain", url: "https://sunmountainlodge.com/webcam", img: "https://sunmountainlodge.com/wp-content/uploads/webcam/smlcam.jpg" },
-        { name: "Edelweiss", url: "http://highlandmeadow.homelinux.org", img: "edelweiss.jpg" },
+        { name: "Edelweiss", url: "http://highlandmeadow.homelinux.org", img: "https://wsrv.nl/?url=highlandmeadow.homelinux.org" },
         { name: "Mazama Snow Stake", url: "https://stake-images.sfo3.digitaloceanspaces.com/mazama/latest/stake_image.jpg", img: "https://stake-images.sfo3.digitaloceanspaces.com/mazama/latest/stake_image.jpg" },
         { name: "Winthrop", url: "https://wsdot.com/travel/real-time/mountainpasses/north-cascade-hwy", img: "https://images.wsdot.wa.gov/nc/020vc19255.jpg" },
         { name: "Loup Loup Pass", url: "https://wsdot.com/travel/real-time/mountainpasses/Loup-Loup", img: "https://images.wsdot.wa.gov/nc/020vc21450.jpg" },
@@ -167,6 +182,8 @@
         `;
         container.appendChild(card);
     });
+
+    updateWeather();
 </script>
 
 </body>
