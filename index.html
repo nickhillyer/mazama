@@ -9,8 +9,7 @@
     <style>
         :root {
             --brand-orange: #fc6f03;
-            --bg-dark: #222222;
-            --card-bg: #333333;
+            --bg-dark: #1a1a1a;
             --text-light: #eeeeee;
         }
 
@@ -23,14 +22,14 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         header {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #444;
+            border-bottom: 1px solid #333;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -40,9 +39,10 @@
 
         .pageTitle {
             color: var(--brand-orange);
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 22px;
+            font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 1px;
             margin: 0;
         }
 
@@ -55,63 +55,48 @@
         .camera-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-between; /* Better alignment for side-by-side */
+            gap: 30px;
         }
 
-        .cam-card {
-            background: var(--card-bg);
-            border-radius: 6px;
+        .cam-link {
             text-decoration: none;
-            width: 100%; /* Default to full width for mobile */
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #444;
-            overflow: hidden;
-            transition: border-color 0.2s;
-            box-sizing: border-box;
-        }
-
-        .cam-card:hover {
-            border-color: var(--brand-orange);
+            width: 100%;
+            display: block;
+            /* Hover opacity and transition removed */
         }
 
         .cam-label {
-            padding: 8px 12px;
-            color: var(--brand-orange);
-            font-size: 13px;
-            font-weight: 600;
+            padding: 0 0 8px 0;
+            color: #aaa;
+            font-size: 12px;
+            font-weight: 700;
             text-transform: uppercase;
-            background: #2a2a2a;
+            letter-spacing: 0.5px;
+            /* Hover color change removed */
         }
 
-        .img-container {
-            background: #111;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 200px;
+        .img-wrapper {
+            background: #000;
+            line-height: 0;
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        .cam-card img {
+        .cam-link img {
             width: 100%;
             height: auto;
             display: block;
             object-fit: contain;
         }
 
-        /* Desktop Layout logic */
         @media (min-width: 700px) {
-            /* First two items remain 100% width */
-            .cam-card:nth-child(1),
-            .cam-card:nth-child(2) {
+            .cam-link:nth-child(1),
+            .cam-link:nth-child(2) {
                 width: 100%;
             }
 
-            /* 3rd item onwards: Split into 2 columns */
-            /* We subtract 10px to account for the 20px gap (20 / 2 = 10) */
-            .cam-card:nth-child(n+3) {
-                width: calc(50% - 10px);
+            .cam-link:nth-child(n+3) {
+                width: calc(50% - 15px);
             }
         }
     </style>
@@ -124,8 +109,7 @@
         <div id="weather">Loading...</div>
     </header>
 
-    <div class="camera-grid" id="camera-container">
-        </div>
+    <div class="camera-grid" id="camera-container"></div>
 </div>
 
 <script>
@@ -146,7 +130,7 @@
                 const timestamp = new Date(props.timestamp);
                 const diffMins = Math.floor((new Date() - timestamp) / 60000);
                 const timeText = diffMins < 1 ? 'just now' : diffMins + 'm ago';
-                weatherEl.innerHTML = `${tempF.toFixed(0)}°F <span style="font-size:12px; font-weight:normal; opacity:0.8;">about ${timeText}</span>`;
+                weatherEl.innerHTML = `${tempF.toFixed(0)}°F <span style="font-size:11px; font-weight:normal; color:#888;">· ${timeText}</span>`;
             })
             .catch(error => {
                 console.error('Weather load failed:', error);
@@ -170,17 +154,17 @@
     const cacheBuster = "?" + Date.now();
 
     cameras.forEach(cam => {
-        const card = document.createElement('a');
-        card.href = cam.url;
-        card.target = "_blank";
-        card.className = 'cam-card';
-        card.innerHTML = `
+        const link = document.createElement('a');
+        link.href = cam.url;
+        link.target = "_blank";
+        link.className = 'cam-link';
+        link.innerHTML = `
             <div class="cam-label">${cam.name}</div>
-            <div class="img-container">
+            <div class="img-wrapper">
                 <img src="${cam.img}${cacheBuster}" alt="${cam.name}" loading="lazy">
             </div>
         `;
-        container.appendChild(card);
+        container.appendChild(link);
     });
 
     updateWeather();
