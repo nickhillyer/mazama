@@ -27,7 +27,7 @@
         }
 
         header {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 1px solid #333;
             display: flex;
@@ -54,7 +54,7 @@
         .camera-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 20px;
         }
 
         .cam-link {
@@ -64,7 +64,7 @@
         }
 
         .cam-label {
-            padding: 0 0 8px 0;
+            padding: 0 0 4px 0;
             color: #aaa;
             font-size: 18px;
             font-weight: 700;
@@ -102,7 +102,7 @@
 <div class="container">
     <header>
         <h1 class="pageTitle">Mazama Cameras</h1>
-        <div id="weather">Loading...</div>
+        <div id="weather"></div>
     </header>
 
     <div class="camera-grid" id="camera-container"></div>
@@ -118,15 +118,23 @@
             .then(data => {
                 const props = data.properties;
                 const tempC = props.temperature.value;
+                
+                // Return early if no temp data
                 if (tempC === null) {
-                    weatherEl.innerText = "Temp Unavailable";
+                    weatherEl.innerText = "";
                     return;
                 }
-                const tempF = (tempC * 9/5) + 32;
+
                 const timestamp = new Date(props.timestamp);
                 const diffMins = Math.floor((new Date() - timestamp) / 60000);
-                const timeText = diffMins < 1 ? 'just now' : diffMins + 'm ago';
-                weatherEl.innerHTML = `${tempF.toFixed(0)}° <span style="font-size:11px; font-weight:normal; color:#888;"> ${timeText}</span>`;
+
+                // Only show if updated in the last 90 minutes
+                if (diffMins <= 90) {
+                    const tempF = (tempC * 9/5) + 32;
+                    weatherEl.innerHTML = `${tempF.toFixed(0)}°`;
+                } else {
+                    weatherEl.innerText = "";
+                }
             })
             .catch(error => {
                 console.error('Weather load failed:', error);
